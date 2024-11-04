@@ -59,7 +59,7 @@ pipeline {
         always {
             // Clean up workspace, show logs, or notify if needed
             
-                sh 'terraform output' // Output the current state
+               cleanWs()
             
         }
     }
