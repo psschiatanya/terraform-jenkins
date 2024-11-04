@@ -53,6 +53,23 @@ pipeline {
             }
         }
     }
-    }
-
     
+
+     post {
+        always {
+            // Clean workspace and show output
+            sh 'terraform output'
+            cleanWs()
+        }
+
+        success {
+            // Notify on success
+            echo 'Terraform action completed successfully!'
+        }
+
+        failure {
+            // Notify on failure
+            echo 'Terraform apply or destroy failed.'
+        }
+    }
+}
