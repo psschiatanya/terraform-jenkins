@@ -36,7 +36,7 @@ pipeline {
             steps {
                 
                 input message: 'Approve to apply Terraform changes?'
-                sh 'terraform apply tfplan'
+                sh 'terraform apply tfplan -auto-approve'
              
             }
         }
