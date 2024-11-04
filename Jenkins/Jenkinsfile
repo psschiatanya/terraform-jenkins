@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose Terraform action')
+        string(name: 'TF_VAR_example', defaultValue: '', description: 'Example variable for Terraform') // Add more parameters as needed
+    }
+
     environment {
         ARM_CLIENT_ID        = credentials('ARM_CLIENT_ID')
         ARM_CLIENT_SECRET    = credentials('ARM_CLIENT_SECRET')
@@ -32,20 +37,30 @@ pipeline {
             }
         }
 
-        stage('Terraform Apply') {
+         stage('Terraform Action') {
             steps {
-                
-                input message: 'Approve to apply Terraform changes?'
-                sh 'terraform apply tfplan -auto-approve'
-             
+                script {
+                    if (params.ACTION == 'apply') {
+                        
+                            sh 'terraform apply -auto-approve'
+                        
+                    } else if (params.ACTION == 'destroy') {
+                        
+                            sh 'terraform destroy -auto-approve'
+                        
+                    }
+                }
             }
         }
     }
+    }
 
     post {
-        always {		  
-            cleanWs()       
+        always {
+            // Clean up workspace, show logs, or notify if needed
+            
+                sh 'terraform output' // Output the current state
+            
+        }
     }
-}
 
-}
