@@ -18,18 +18,21 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
+                dir ('/Terraform')
                 sh 'terraform init'
             }
         }
 
         stage('Terraform Plan') {
             steps {
+                dir ('/Terraform')
                 sh 'terraform plan -out=tfplan'
             }
         }
 
         stage('Terraform Apply') {
             steps {
+                dir ('/Terraform')
                 input message: 'Approve to apply Terraform changes?'
                 sh 'terraform apply tfplan'
             }
