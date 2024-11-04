@@ -8,7 +8,13 @@ pipeline {
         ARM_TENANT_ID        = credentials('ARM_TENANT_ID')
     }
 
-    stages {        
+    stages {  
+
+        stage('Values Defining') {
+            steps {
+                echo 'ARM_CLIENT_ID'
+            }
+        }      
 
         stage('Terraform Init') {
             steps {
