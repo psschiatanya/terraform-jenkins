@@ -55,12 +55,4 @@ pipeline {
     }
     }
 
-    post {
-        always {
-            // Clean up workspace, show logs, or notify if needed
-            
-               cleanWs()
-            
-        }
-    }
-
+    
